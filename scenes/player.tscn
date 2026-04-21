@@ -326,7 +326,8 @@ script = SubResource("GDScript_3vyb7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1761159518]
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 animation = &"Idle"
-frame_progress = 0.6511042
+autoplay = "Idle"
+frame_progress = 0.5874051
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=53575414]
 position = Vector2(1, 19)
