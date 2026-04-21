@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://8s60f24pt14l"]
 
 [ext_resource type="PackedScene" uid="uid://ctud7rgohyirf" path="res://scenes/floor.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cwvddaeenyguw" path="res://scenes/player.tscn" id="2_0wfyh"]
 
 [node name="Main" type="Node2D" unique_id=1672459679]
 
 [node name="Floor" parent="." unique_id=249708906 instance=ExtResource("1_o5qli")]
 position = Vector2(88, 396)
 scale = Vector2(2, 1)
+
+[node name="Player" parent="." unique_id=2014304873 instance=ExtResource("2_0wfyh")]
+position = Vector2(205.99998, 140.99997)
