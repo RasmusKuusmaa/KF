@@ -3,6 +3,11 @@ extends CharacterBody2D
 @onready var anim = $AnimatedSprite2D
 @onready var health_bar = $HealthBar
 
+@export var move_left_action = "move_left_p1"
+@export var move_right_action = "move_right_p1"
+@export var jump_action = "jump_p1"
+@export var attack_action = "attack_p1"
+
 signal HEALTH_CHANGED(health, max_health)
 
 const SPEED = 300.0
@@ -22,27 +27,22 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 	
-	#Handle attack.
-	if Input.is_action_just_pressed("attack") and not is_attacking and not is_hurting:
+	var direction = 0
+	
+	if Input.is_action_pressed(move_left_action):
+		direction = -1
+		
+	if Input.is_action_pressed(move_right_action):
+		direction = 1
+
+	if Input.is_action_just_pressed(jump_action) and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	if Input.is_action_just_pressed(attack_action) and not is_attacking and not is_hurting:
 		is_attacking = true
 		anim.play("attack")
-	
-	#fake damage
-	if Input.is_action_just_pressed("a_button_for_testing_things") and not is_hurting:
-		take_damage(15)
-
 		
-	var direction  = 0
-	if Input.is_action_pressed("move_left"):
-		direction = -1
-	if Input.is_action_pressed("move_right"):
-		direction = 1
-	
 	if not is_attacking and not is_hurting:
 		if direction:
 			velocity.x = direction * SPEED
