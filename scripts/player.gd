@@ -11,10 +11,10 @@ extends CharacterBody2D
 signal HEALTH_CHANGED(health, max_health)
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -600.0
 
 var max_health = 100 
-var health = 50
+var health = 100
 
 var is_attacking = false
 var is_hurting = false
@@ -42,6 +42,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed(attack_action) and not is_attacking and not is_hurting:
 		is_attacking = true
 		anim.play("attack")
+		$AttackArea.monitoring = true
 		
 	if not is_attacking and not is_hurting:
 		if direction:
@@ -60,6 +61,7 @@ func _physics_process(delta: float) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if anim.animation == "attack":
 		is_attacking = false
+		$AttackArea.monitoring= false
 	if anim.animation == "hurt":
 		is_hurting = false
 	
@@ -73,3 +75,10 @@ func take_damage(damage: float):
 	
 	
 	
+
+
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+		if body.has_method("take_damage") and body != self:
+			body.take_damage(20)
