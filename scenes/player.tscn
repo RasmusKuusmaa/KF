@@ -13,6 +13,9 @@ script/source = "extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var max_health = 100 
+var health = 100
+
 var is_attacking = false
 var is_hurting = false
 
@@ -32,7 +35,7 @@ func _physics_process(delta: float) -> void:
 		anim.play(\"attack\")
 	
 	#fake damage
-	if Input.is_action_just_pressed(\"a_button_for_testing_things\"):
+	if Input.is_action_just_pressed(\"a_button_for_testing_things\") and not is_hurting:
 		take_damage(3)
 
 		
@@ -63,8 +66,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		is_hurting = false
 	
 func take_damage(damage: float):
+	health -= damage
+	health = clamp(health, 0, max_health)
+	
 	is_hurting = true
 	anim.play(\"hurt\")
+	print(health)
 	
 	
 	
