@@ -60,6 +60,11 @@ func _physics_process(delta: float) -> void:
 		is_attacking = true
 		anim.play("attack")
 		attack_area.monitoring = true
+		
+		#Freeze
+		Engine.time_scale = 0.05
+		await get_tree().create_timer(1.0 * Engine.time_scale).timeout
+		Engine.time_scale = 1.0
 
 	if not is_attacking and not is_hurting:
 		if direction != 0:
