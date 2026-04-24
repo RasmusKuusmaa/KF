@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dqfbd6gxu0pdg"]
+
+[ext_resource type="Script" uid="uid://c87rf8bfagseo" path="res://scripts/drawing_ui.gd" id="1_bx7a5"]
+
+[node name="DrawingUI" type="CanvasLayer" unique_id=1892426235]
+script = ExtResource("1_bx7a5")
+
+[node name="DrawingSurface" type="Control" parent="." unique_id=921225400]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 360.0
+offset_top = 128.0
+offset_right = 662.0
+offset_bottom = 432.0
+
+[node name="Background" type="ColorRect" parent="DrawingSurface" unique_id=951952945]
+layout_mode = 0
+offset_right = 301.0
+offset_bottom = 305.0
+color = Color(0.96237713, 0.8584755, 0.77513915, 1)
+
+[node name="ReferenceDrawing" type="TextureRect" parent="DrawingSurface" unique_id=142301973]
+layout_mode = 0
+offset_right = 299.0
+offset_bottom = 303.0
+
+[node name="StrokeContainer" type="Node2D" parent="DrawingSurface" unique_id=405402720]

@@ -14,7 +14,3 @@ position = Vector2(205.99998, 140.99997)
 
 [node name="Player2" parent="." unique_id=1768296446 instance=ExtResource("2_0wfyh")]
 position = Vector2(576.0001, 127.00002)
-move_left_action = "move_left_p2"
-move_right_action = "move_right_p2"
-jump_action = "jump_p2"
-attack_action = "attack_p2"

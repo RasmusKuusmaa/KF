@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://h5lkfb8dp3mj" path="res://assets/art/FREE_Samurai 2D Pixel Art v1.2/Sprites/HURT.png" id="3_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://bhj2i28sn3suu" path="res://assets/art/FREE_Samurai 2D Pixel Art v1.2/Sprites/RUN.png" id="4_tuyoq"]
 [ext_resource type="PackedScene" uid="uid://bubslw2k6dn67" path="res://scenes/health_bar.tscn" id="6_tuyoq"]
-[ext_resource type="PackedScene" uid="uid://dqfbd6gxu0pdg" path="res://scenes/drawing_ui.tscn" id="7_fjrip"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3vyb7"]
 atlas = ExtResource("1_3vyb7")
@@ -322,8 +321,6 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=149115320]
 position = Vector2(21.249159, 16.954113)
 shape = SubResource("CapsuleShape2D_tuyoq")
-
-[node name="DrawingUI" parent="." unique_id=1892426235 instance=ExtResource("7_fjrip")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
