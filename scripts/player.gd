@@ -9,6 +9,16 @@ extends CharacterBody2D
 @export var move_right_action = "move_right_p1"
 @export var jump_action = "jump_p1"
 @export var attack_action = "attack_p1"
+var input_locked := false
+enum State {
+	IDLE,
+	ATTACK_START,
+	DRAWING,
+	RESOLVE,
+	STUNNED
+}
+
+var state = State.IDLE
 
 signal HEALTH_CHANGED(health, max_health)
 
@@ -34,6 +44,9 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	if input_locked:
+		return
+		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -55,16 +68,18 @@ func _physics_process(delta: float) -> void:
 
 	attack_shape.position.x = abs(attack_offset_x) * facing
 
-
-	if Input.is_action_just_pressed(attack_action) and not is_attacking and not is_hurting:
+	#ATTACK RAAAR!!
+	if Input.is_action_just_pressed(attack_action) and not is_attacking and not is_hurting and not input_locked:
 		is_attacking = true
+		input_locked = true
+		state = State.ATTACK_START
+
 		anim.play("attack")
 		attack_area.monitoring = true
-		
-		#Freeze
-		Engine.time_scale = 0.05
-		await get_tree().create_timer(1.0 * Engine.time_scale).timeout
-		Engine.time_scale = 1.0
+
+		start_drawing_phase()
+
+
 
 	if not is_attacking and not is_hurting:
 		if direction != 0:
@@ -79,7 +94,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if anim.animation == "attack":
-		is_attacking = false
+		if state != State.ATTACK_START:
+			return
 		attack_area.monitoring = false
 
 	if anim.animation == "hurt":
@@ -99,3 +115,32 @@ func take_damage(damage: float):
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if is_attacking and body.has_method("take_damage") and body != self:
 		body.take_damage(20)
+		
+		
+
+func start_drawing_phase():
+	state = State.DRAWING
+
+	print("DRAW PHASE STARTED")
+
+	await get_tree().create_timer(0.5).timeout
+
+	resolve_attack()
+	
+
+func resolve_attack():
+	state = State.RESOLVE
+
+	var success = randi() % 2 == 0
+
+	if success:
+		print("Attack succeeds")
+		is_attacking = false
+	else:
+		print("Attack failed")
+		state = State.STUNNED
+		await get_tree().create_timer(0.8).timeout
+
+	is_attacking = false
+	input_locked = false
+	state = State.IDLE
